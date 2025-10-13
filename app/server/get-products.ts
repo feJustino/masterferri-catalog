@@ -40,7 +40,9 @@ export async function getProducts(
 
     console.log('Getting products with filters', { page, limit, filters });
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const baseUrl = document?.location
+      ? document.location.origin
+      : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
     // Construir query params
     const params = new URLSearchParams({
