@@ -1,4 +1,3 @@
-'use server';
 import {
   SingleProdutoResponseDTO,
   ProdutosDadosBaseDTO,
