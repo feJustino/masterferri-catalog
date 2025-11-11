@@ -1,34 +1,60 @@
-import { BlingProductsService } from '@/app/server/get-products';
-import { ApiErrorHandler } from '@/lib/api-error-handler';
 import { NextRequest, NextResponse } from 'next/server';
+import { SingleProdutoResponseDTO } from '@/app/entities/DTO/blinq-product';
+import httpClient from '@/lib/httpClient';
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  console.log('Received request to fetch product from Bling API v3');
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const filters = {
-      page: parseInt(searchParams.get('page') || '1'),
-      limit: parseInt(searchParams.get('limit') || '30'),
-      search: searchParams.get('search') || undefined,
-      priceMin: searchParams.get('priceMin')
-        ? parseFloat(searchParams.get('priceMin')!)
-        : undefined,
-      priceMax: searchParams.get('priceMax')
-        ? parseFloat(searchParams.get('priceMax')!)
-        : undefined,
-      idCategoria: searchParams.get('idCategoria')
-        ? parseInt(searchParams.get('idCategoria')!)
-        : undefined,
-    };
+    const { id } = await params;
 
-    const result = await BlingProductsService.getProducts(filters);
+    if (!id || isNaN(Number(id))) {
+      return NextResponse.json(
+        { error: 'Invalid product ID' },
+        { status: 400 }
+      );
+    }
 
-    return NextResponse.json({
-      data: result.data || [],
-      total: result.data?.length || 0,
-      page: filters.page,
-      hasMore: (result.data?.length || 0) > 0,
-    });
+    console.log('Fetching product from Bling API v3', { id });
+
+    const response = await httpClient.get<SingleProdutoResponseDTO>(
+      `/produtos/${id}`
+    );
+
+    if (!response.data || response.status !== 200) {
+      if (response.status === 404) {
+        return NextResponse.json(
+          { error: 'Product not found' },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json(
+        { error: 'Failed to fetch product from Bling' },
+        { status: 500 }
+      );
+    }
+
+    console.log('Product fetched successfully from Bling API v3', { id });
+
+    return NextResponse.json(response.data);
   } catch (error) {
-    return ApiErrorHandler.handle(error);
+    console.error('Error fetching product from Bling API v3', error);
+
+    // Check if it's a 404 error from the external API
+    if (
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404
+    ) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
