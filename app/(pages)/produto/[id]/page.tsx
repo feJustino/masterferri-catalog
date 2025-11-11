@@ -5,25 +5,9 @@ import { ExpandableDescription } from '@/app/components/ui/expandable-text';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useQuery } from '@tanstack/react-query';
 import { useParams, notFound } from 'next/navigation';
 import { ProductImageGallery } from './components/product-image-gallery';
-import { ProdutosDadosDTO } from '@/app/entities/DTO/blinq-product';
-
-// Client-side function to fetch product data
-async function fetchProduct(id: string): Promise<ProdutosDadosDTO> {
-  const response = await fetch(`/api/bling/products/${id}`);
-
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error('Product not found');
-    }
-    throw new Error('Failed to fetch product');
-  }
-
-  const data = await response.json();
-  return data.data;
-}
+import { useProduct } from '@/app/hooks/useBlingApi';
 
 // Loading component
 function ProductPageSkeleton() {
@@ -90,17 +74,8 @@ export default function ProductPage() {
     notFound();
   }
 
-  // Use React Query to fetch product data
-  const {
-    data: product,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['product', id],
-    queryFn: () => fetchProduct(id),
-    retry: 1,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  });
+  // Use custom hook to fetch product data
+  const { data: product, isLoading, error } = useProduct(id);
 
   // Handle loading state
   if (isLoading) {

@@ -1,60 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SingleProdutoResponseDTO } from '@/app/entities/DTO/blinq-product';
-import httpClient from '@/lib/httpClient';
+import { BlingApiService } from '@/app/services/bling/api.service';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  console.log('Received request to fetch product from Bling API v3');
   try {
     const { id } = await params;
 
-    if (!id || isNaN(Number(id))) {
-      return NextResponse.json(
-        { error: 'Invalid product ID' },
-        { status: 400 }
-      );
-    }
+    const product = await BlingApiService.getProduct(id);
 
-    console.log('Fetching product from Bling API v3', { id });
-
-    const response = await httpClient.get<SingleProdutoResponseDTO>(
-      `/produtos/${id}`
-    );
-
-    if (!response.data || response.status !== 200) {
-      if (response.status === 404) {
-        return NextResponse.json(
-          { error: 'Product not found' },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json(
-        { error: 'Failed to fetch product from Bling' },
-        { status: 500 }
-      );
-    }
-
-    console.log('Product fetched successfully from Bling API v3', { id });
-
-    return NextResponse.json(response.data);
+    return NextResponse.json({ data: product });
   } catch (error) {
-    console.error('Error fetching product from Bling API v3', error);
+    console.error(
+      `Error in product API route for ID ${(await params).id}:`,
+      error
+    );
 
-    // Check if it's a 404 error from the external API
-    if (
-      error &&
-      typeof error === 'object' &&
-      'status' in error &&
-      error.status === 404
-    ) {
-      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    const message =
+      error instanceof Error ? error.message : 'Internal server error';
+
+    let status = 500;
+    if (message.includes('Invalid product ID')) {
+      status = 400;
+    } else if (message.includes('not found')) {
+      status = 404;
     }
 
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: message }, { status });
   }
 }

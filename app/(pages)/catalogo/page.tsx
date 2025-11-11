@@ -1,8 +1,7 @@
 'use client';
 import Pagination from '@/app/components/commons/pagination';
 import { useProductFilters } from '@/app/hooks/useProductFilters';
-import { getProducts } from '@/app/server/get-products';
-import { useQuery } from '@tanstack/react-query';
+import { useProducts } from '@/app/hooks/useBlingApi';
 import CatalogHeader from './components/catalog-header';
 import EmptyState from './components/empty-state';
 import ProductsGrid from './components/products-grids';
@@ -18,11 +17,7 @@ export default function Catalogo() {
     hasActiveFilters,
   } = useProductFilters();
 
-  const { data: productsResponse, isLoading } = useQuery({
-    queryKey: ['products', filters],
-    queryFn: () => getProducts(filters),
-    staleTime: 5 * 60 * 1000, // 5 minutos
-  });
+  const { data: productsResponse, isLoading } = useProducts(filters);
 
   const products = productsResponse?.data || [];
   const pagination = productsResponse?.pagination;

@@ -1,4 +1,4 @@
-import 'server-only';
+'use server';
 import { db } from '@/lib/firebase';
 import { BlingTokens } from '../entities/DTO/blinq';
 
