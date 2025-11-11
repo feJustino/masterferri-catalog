@@ -24,14 +24,14 @@ export default function ProductCard({
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       {/* Product Image */}
-      <div className="relative">
-        <Link href={`/produto/${product.id}`}>
+      <div className="relative flex flex-col ">
+        <Link href={`/produto/${product.id}`} className="w-full">
           <Image
-            src={product.imagemURL || '/images/no-image.png'}
+            src={product.imagemURL || '/fallback.webp'}
             alt={product.nome}
             width={50}
             height={50}
-            className="object-cover hover:scale-105 transition-transform cursor-pointer"
+            className="object-fit hover:scale-105 transition-transform cursor-pointer w-full sm:w-auto"
           />
         </Link>
 
@@ -46,7 +46,7 @@ export default function ProductCard({
 
         {/* Stock indicator */}
         {!isOutOfStock && product.estoque?.saldoVirtualTotal <= 5 && (
-          <div className="absolute top-2 right-2">
+          <div className="absolute top-2 right-2 space-y-1">
             <span className="bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded">
               Últimas {product.estoque?.saldoVirtualTotal}
             </span>

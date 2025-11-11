@@ -41,38 +41,22 @@ export default function Catalogo() {
 
         <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-        <FilterToggle
-          showFilters={showFilters}
-          onToggleFilters={() => setShowFilters(!showFilters)}
-          hasActiveFilters={hasActiveFilters}
-          activeFiltersCount={activeFiltersCount}
-          onClearFilters={clearFilters}
-        />
-
-        <FiltersPanel
-          isVisible={showFilters}
-          priceRange={priceRange}
-          onPriceRangeChange={setPriceRange}
-        />
-        {products.length > 0 ? (
+        {products.length === 0 && !isLoading ? (
+          <EmptyState
+            hasActiveFilters={hasActiveFilters}
+            onClearFilters={clearFilters}
+          />
+        ) : (
           <>
             <ProductsGrid products={products} isLoading={isLoading} />
-
-            {pagination && pagination.totalPages > 1 && (
-              <Pagination
-                currentPage={pagination.page}
-                totalPages={pagination.totalPages}
-                onPageChange={setPage}
-              />
-            )}
           </>
-        ) : (
-          !isLoading && (
-            <EmptyState
-              hasActiveFilters={hasActiveFilters}
-              onClearFilters={clearFilters}
-            />
-          )
+        )}
+        {pagination && pagination.totalPages > 1 && (
+          <Pagination
+            currentPage={pagination.page}
+            totalPages={pagination.totalPages}
+            onPageChange={setPage}
+          />
         )}
       </div>
     </div>

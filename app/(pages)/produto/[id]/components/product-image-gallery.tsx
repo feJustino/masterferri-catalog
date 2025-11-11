@@ -1,5 +1,4 @@
 'use client';
-
 import { Package } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -35,9 +34,9 @@ export function ProductImageGallery({
   return (
     <div className="space-y-4">
       {/* Imagem Principal */}
-      <div className="aspect-square relative overflow-hidden rounded-lg border">
+      <div className="aspect-square relative overflow-hidden rounded-lg border max-w-xl max-h-xl mx-auto my-0">
         <Image
-          src={images[selectedImageIndex].link}
+          src={images[selectedImageIndex].link || '/fallback.webp'}
           alt={images[selectedImageIndex].alt || productName}
           fill
           className="object-scale-down"
@@ -47,7 +46,7 @@ export function ProductImageGallery({
 
       {/* Galeria de Miniaturas */}
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto">
+        <div className="flex gap-2 overflow-x-auto justify-center">
           {images.slice(0, 5).map((image, index) => (
             <div
               key={index}
@@ -57,7 +56,7 @@ export function ProductImageGallery({
               onClick={() => setSelectedImageIndex(index)}
             >
               <Image
-                src={image.link}
+                src={image.link || '/fallback.webp'}
                 alt={image.alt || `${productName} - ${index + 1}`}
                 fill
                 className="object-cover rounded"

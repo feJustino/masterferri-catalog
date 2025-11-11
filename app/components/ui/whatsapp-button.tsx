@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { useCart } from '@/app/context/cart-context';
 import { CustomerData } from '@/app/entities/customer';
@@ -17,6 +18,9 @@ export default function WhatsAppButton({
     observations: '',
   });
 
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+  console.log('WhatsApp Number:', whatsappNumber);
+
   const handleSendToWhatsApp = (): void => {
     if (items.length === 0) {
       alert('Seu carrinho está vazio!');
@@ -32,7 +36,7 @@ export default function WhatsAppButton({
     const message = generateWhatsAppMessage(customerData);
 
     // Create WhatsApp URL
-    const whatsappNumber = process.env.WHATSAPP_NUMBER || '';
+
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
 
     // Open WhatsApp

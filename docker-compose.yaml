@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  masterferri-store:
+    build:
+      context: .
+    container_name: masterferri-store
+    ports:
+      - 3000:3000
+    networks:
+      - primeira-network
+
+networks:
+  primeira-network:
+    driver: bridge

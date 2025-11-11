@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-[url('/hero.jpg')] bg-cover bg-center bg-blend-overlay bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-cover bg-center rounded-lg shadow-lg  m-auto">
-        <div className="text-center bg-gray-100/30 py-2 rounded-xl">
+        <div className="text-center bg-gray-200/50 py-2 rounded-xl">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Peças Automotivas
             <span className="block text-secondary-500">de Qualidade</span>
