@@ -5,8 +5,6 @@ import { getProducts } from '@/app/server/get-products';
 import { useQuery } from '@tanstack/react-query';
 import CatalogHeader from './components/catalog-header';
 import EmptyState from './components/empty-state';
-import FilterToggle from './components/filter-toggle';
-import FiltersPanel from './components/filters-panel';
 import ProductsGrid from './components/products-grids';
 import SearchBar from './components/search-bar';
 
@@ -14,15 +12,10 @@ export default function Catalogo() {
   const {
     searchTerm,
     setSearchTerm,
-    priceRange,
-    setPriceRange,
-    showFilters,
-    setShowFilters,
     setPage,
     filters,
     clearFilters,
     hasActiveFilters,
-    activeFiltersCount,
   } = useProductFilters();
 
   const { data: productsResponse, isLoading } = useQuery({
