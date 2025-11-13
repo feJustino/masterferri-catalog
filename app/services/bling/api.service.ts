@@ -1,3 +1,4 @@
+'server-only';
 import httpClient from '@/lib/httpClient';
 import {
   ProdutosResponseDTO,

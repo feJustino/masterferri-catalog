@@ -1,11 +1,10 @@
 import { BlingTokens } from '../entities/DTO/blinq';
 import axios from 'axios';
-import { env } from 'node:process';
 import { BASIC_AUTH } from './constants';
 
 // Cliente separado para refresh token (evita dependência circular)
 const tokenClient = axios.create({
-  baseURL: env.BLINQ_API_URL,
+  baseURL: process.env.BLINQ_API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',

@@ -1,8 +1,10 @@
+'use server';
 import { BlingTokens } from '../entities/DTO/blinq';
-import { db } from '../../lib/firebase';
+import { getDb } from '../../lib/firebase';
 
 export async function saveTokens(tokens: BlingTokens): Promise<void> {
   try {
+    const db = getDb();
     const tokenData = {
       ...tokens,
       updatedAt: new Date().toISOString(),

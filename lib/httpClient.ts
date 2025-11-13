@@ -1,11 +1,11 @@
+'server-only';
 import axios from 'axios';
-import { env } from 'node:process';
 import { performTokenRefresh } from '../app/actions/perform-token-refresh';
 import { saveTokens } from '../app/actions/save-tokens';
 import { getBlinqTokens } from '../app/server/get-profile-data';
 
 const httpClient = axios.create({
-  baseURL: env.BLINQ_API_URL,
+  baseURL: process.env.BLINQ_API_URL,
   timeout: 10000, // 10 seconds timeout
   headers: {
     'Content-Type': 'application/json',
