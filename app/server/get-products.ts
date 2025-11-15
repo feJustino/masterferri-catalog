@@ -38,8 +38,6 @@ export async function getProducts(
       idCategoria,
     } = filters;
 
-    console.log('Getting products with filters', { page, limit, filters });
-
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
     // Construir query params
@@ -69,8 +67,10 @@ export async function getProducts(
       `${baseUrl}/api/bling/products?${params.toString()}`,
       {
         cache: 'no-store',
+        method: 'GET',
       }
     );
+
 
     if (!response.ok) {
       throw new Error('Failed to fetch products');
