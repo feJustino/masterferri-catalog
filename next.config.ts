@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   env: {
     BLINQ_API_URL: process.env.BLINQ_API_URL,
-    NEXT_PUBLIC_BASE_URL: 'https://example.masterferri.com.br',
+    NEXT_PUBLIC_BASE_URL: process.env.SITE_URL,
     NEXT_PUBLIC_WHATSAPP_NUMBER: process.env.WHATSAPP_NUMBER,
   },
   images: {
