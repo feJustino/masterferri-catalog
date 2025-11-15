@@ -29,9 +29,9 @@ export default function ProductCard({
           <Image
             src={product.imagemURL || '/fallback.webp'}
             alt={product.nome}
-            width={50}
-            height={50}
-            className="object-fit hover:scale-105 transition-transform cursor-pointer w-full sm:w-auto"
+            width={70}
+            height={70}
+            className="object-fit hover:scale-105 transition-transform cursor-pointer w-1/2 sm:w-auto"
           />
         </Link>
 
