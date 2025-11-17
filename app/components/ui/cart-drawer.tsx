@@ -1,7 +1,6 @@
 'use client';
 
 import { useCart } from '@/app/context/cart-context';
-import { ShippingOption } from '@/app/entities/shipping';
 import { Button } from '@/components/ui/button';
 import {
   Drawer,
@@ -14,7 +13,6 @@ import {
 } from '@/components/ui/drawer';
 import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
 import WhatsAppButton from './whatsapp-button';
 
 export interface CartDrawerProps {
@@ -32,12 +30,12 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     clearCart,
   } = useCart();
 
-  const [shippingCEP, setShippingCEP] = useState<string>('');
+  /*   const [shippingCEP, setShippingCEP] = useState<string>('');
   const [shippingOptions, setShippingOptions] = useState<
     ShippingOption[] | null
   >(null);
   const [isCalculatingShipping, setIsCalculatingShipping] =
-    useState<boolean>(false);
+    useState<boolean>(false); */
 
   const handleQuantityChange = (
     productId: number,
@@ -50,7 +48,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     }
   };
 
-/*   const calculateShipping = async (): Promise<void> => {
+  /*   const calculateShipping = async (): Promise<void> => {
     if (!shippingCEP || shippingCEP.length !== 9) {
       alert('Por favor, insira um CEP válido');
       return;
@@ -185,7 +183,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               ))}
 
               {/* Cálculo de frete */}
-{/*               <div className="border-t pt-4">
+              {/*               <div className="border-t pt-4">
                 <h4 className="font-semibold mb-3">Calcular Frete</h4>
                 <div className="flex flex-col md:-flex-row gap-2 mb-3">
                   <input
