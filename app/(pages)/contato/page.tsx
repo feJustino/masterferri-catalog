@@ -175,11 +175,11 @@ const Contato: NextPage = () => {
                 <div>
                   <h3 className="font-medium text-gray-900">Endereço</h3>
                   <p className="text-gray-600">
-                    Rua das Peças, 123
+                    Av. José Paulino, 2691 
                     <br />
-                    Centro - São Paulo, SP
+                    Morumbi, Paulínia - SP
                     <br />
-                    CEP: 01000-000
+                    CEP: 13140-723
                   </p>
                 </div>
               </div>
