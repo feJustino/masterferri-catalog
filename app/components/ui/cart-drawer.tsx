@@ -50,7 +50,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     }
   };
 
-  const calculateShipping = async (): Promise<void> => {
+/*   const calculateShipping = async (): Promise<void> => {
     if (!shippingCEP || shippingCEP.length !== 9) {
       alert('Por favor, insira um CEP válido');
       return;
@@ -97,7 +97,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     if (shippingOptions) {
       setShippingOptions(null);
     }
-  };
+  }; */
 
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={onClose}>
@@ -185,7 +185,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               ))}
 
               {/* Cálculo de frete */}
-              <div className="border-t pt-4">
+{/*               <div className="border-t pt-4">
                 <h4 className="font-semibold mb-3">Calcular Frete</h4>
                 <div className="flex flex-col md:-flex-row gap-2 mb-3">
                   <input
@@ -222,7 +222,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     ))}
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           )}
         </div>

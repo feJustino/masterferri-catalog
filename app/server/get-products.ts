@@ -38,7 +38,7 @@ export async function getProducts(
       idCategoria,
     } = filters;
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     // Construir query params
     const params = new URLSearchParams({
@@ -70,7 +70,6 @@ export async function getProducts(
         method: 'GET',
       }
     );
-
 
     if (!response.ok) {
       throw new Error('Failed to fetch products');
